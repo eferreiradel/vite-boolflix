@@ -4,14 +4,15 @@
       <input type="text" v-model="movieToSearch" class="w-100" />
       <button class="btn btn-dark" @click="searchMovie">search</button>
     </div>
-    <div class="row justify-content-center">
+    <div class="row justify-content-center p-5">
       <!-- <p>{{ apiMovieResponse }}</p> -->
-      <div class="col-5" v-for="movie in apiMovieResponse">
-        <div class="container text-center">
+      <div class="col-3" v-for="movie in apiMovieResponse">
+        <img :src="movieCover + movie.poster_path" class="w-100" />
+        <div class="container p-0">
           <h1>{{ movie.title }}</h1>
-          <div class="container d-flex justify-content-between">
-            <p>Titolo originale</p>
-            <p>Lngua originale:</p>
+          <div class="container d-flex justify-content-between p-0">
+            <h3>{{ movie.original_title }}</h3>
+            <h3>{{ movie.original_language }}</h3>
           </div>
           <div class="conta">
             <span> VOTO </span>
@@ -30,6 +31,10 @@ export default {
       baseURL: "https://api.themoviedb.org/3/search/movie?",
       movieToSearch: "i-simpson",
       urlAppend: "&include_adult=false&language=en-US&page=1",
+
+      // MOVIE IMAGES
+      baseImageURL: "https://image.tmdb.org/t/p/",
+      imageSize: "w500",
 
       apiMovieResponse: "",
     };
@@ -55,9 +60,13 @@ export default {
     apiURL() {
       return `${this.baseURL}query=${this.movieToSearch}${this.urlAppend}`;
     },
+    movieCover() {
+      return `${this.baseImageURL}${this.imageSize}`;
+    },
   },
   mounted() {
-    console.log(this.apiURL);
+    // console.log(this.movieCover);
+    // console.log(this.apiURL);
   },
 };
 </script>
