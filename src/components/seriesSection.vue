@@ -1,25 +1,31 @@
 <template>
-  <search-bar></search-bar>
-  <section id="movies" class="">
-    <div class="container-fluid">
+  <section id="movies">
+    <div class="contaier-fluid">
+      <h3>Series</h3>
       <div class="container">
         <div class="row">
-          <div class="col-3 p-0" v-for="movie in movies">
+          <div class="col-3 p-0" v-for="serie in series">
             <div class="container-fluid card-container p-2">
-              <img :src="posterImage + movie.poster_path" />
+              <img :src="posterImage + serie.poster_path" />
             </div>
             <div class="container">
               <div class="container p-0">
-                <h5>{{ movie.title }}</h5>
+                <h3>{{ serie.name }}</h3>
               </div>
               <div class="container d-flex p-0">
-                <div class="container">
-                  <p>Titolo originale:{{ movie.original_title }}</p>
+                <div class="container w-100">
+                  <h4>
+                    {{ serie.original_name }}
+                  </h4>
                 </div>
-                <div class="container">lingua originale</div>
+                <div class="container">
+                  <h4>
+                    {{ serie.original_language }}
+                  </h4>
+                </div>
               </div>
               <div class="container p-2 text-center">
-                <span v-for="vote in voteAverage(movie.vote_average)">
+                <span v-for="vote in voteAverage(serie.vote_average)">
                   <i class="fas fa-star"></i>
                 </span>
               </div>
@@ -29,20 +35,12 @@
       </div>
     </div>
   </section>
-  <series-setion></series-setion>
 </template>
-
 <script>
-import searchBar from "./components/searchMovie.vue";
-import seriesSetion from "./components/seriesSection.vue";
-import { endPointData } from "./stores/store";
+import { endPointData } from "../stores/store";
 export default {
-  name: "App",
-  data() {
-    return {
-      cards: 5,
-    };
-  },
+  name: "seriesSection",
+
   methods: {
     voteAverage(vote) {
       return Math.floor(vote);
@@ -52,19 +50,10 @@ export default {
     posterImage() {
       return endPointData.baseImageURL;
     },
-    movies() {
-      return endPointData.movies;
-    },
     series() {
       return endPointData.series;
     },
   },
-  components: {
-    searchBar,
-    seriesSetion,
-  },
-  mounted() {},
 };
 </script>
-
 <style></style>
